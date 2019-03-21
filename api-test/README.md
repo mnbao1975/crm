@@ -1,0 +1,8 @@
+Client ID successfully registered
+Client ID: 1000.G4AGO1Z1OVR899609OWZMREW0IEY48
+Client Secret: 682ec27df54a133c024e506030fcc5f510fcc0cc6d
+
+
+
+Code:
+1000.9eae904320b629adb99686828b62cb47.d9e41fd237621aee197c580f5b9fa84b

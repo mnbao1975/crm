@@ -1,0 +1,15 @@
+{
+  "name": "sync-google-spreadsheet",
+  "version": "1.0.0",
+  "description": "Following this link: https://www.twilio.com/blog/2017/03/google-spreadsheets-and-javascriptnode-js.html",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "google-spreadsheet": "^2.0.7"
+  }
+}

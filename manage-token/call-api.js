@@ -12,7 +12,7 @@ if (config.error) {
  * @param {obj} headers 
  * @param {obj} params 
  */
-const getRecords = async (url, headers, params={}) => {
+async function getRecords(url, headers, params={}) {
   try {
     return await axios({
       method: 'get',
@@ -28,31 +28,46 @@ const getRecords = async (url, headers, params={}) => {
  * Example for getting invoices
  * @param {string} oauthtoken 
  */
-const getInvoices = async (oauthtoken) => {  
+async function getLeads() {  
   try {
-    const url = `${process.env.API_URL}/invoices`;
+    const oauthtoken = await tokenUtils.getToken();
+    const url = `${process.env.API_URL}/leads`;
     const headers = {'Authorization': `Zoho-oauthtoken ${oauthtoken}`};
+    
     const res = await getRecords(url, headers);
     if(res) {
       console.log(res.data);
     }  
   } catch (error) {
-    // Get refresh token
-    if (error.response.data.code && error.response.data.code === 'INVALID_TOKEN') {
-      console.log(error.message);
-      const objToken = await tokenUtils.getRefreshToken();
-      console.log(`New Token: ${objToken.data.access_token}`);
-      getInvoices(objToken.data.access_token);
-    }
+    console.log(error);
+  }
+};
+/**
+ * Example for getting invoices
+ * @param {string} oauthtoken 
+ */
+async function getInvoices() {  
+  try {
+    const oauthtoken = await tokenUtils.getToken();
+    const url = `${process.env.API_URL}/invoices`;
+    const headers = {'Authorization': `Zoho-oauthtoken ${oauthtoken}`};
+    
+    const res = await getRecords(url, headers);
+    if(res) {
+      console.log(res.data);
+    }  
+  } catch (error) {
+    console.log(error);
   }
 };
 /**
  * Example for searching invoices with criteria in the params
  * @param {string} oauthtoken 
  */
-const searchInvoices = async (oauthtoken) => {
+async function searchInvoices() {
   try {
-    const url = `${process.env.API_URL}/invoices`;
+    const oauthtoken = await tokenUtils.getToken();
+    const url = `${process.env.API_URL}/invoices/search`;
     const headers = { Authorization: `Zoho-oauthtoken ${oauthtoken}`};
     const params = { criteria: '(Modified_By.id:equals:3829742000000197425)'};
     const res = await getRecords(url, headers, params);
@@ -60,15 +75,10 @@ const searchInvoices = async (oauthtoken) => {
       console.log(res.data);
     }  
   } catch (error) {
-    // Get refresh token
-    if (error.response.data.code && error.response.data.code === 'INVALID_TOKEN') {
-      console.log(error.message);
-      const objToken = await tokenUtils.getRefreshToken();
-      console.log(`New Token: ${objToken.data.access_token}`);
-      getInvoices(objToken.data.access_token);
-    }
+    console.log(error);
   }
 };
 
-//getInvoices('1000.724b31ffc4bea14f5d891bae6d51dc8e.0e509496b62427dca7fa68bf5c7f2aab');
-searchInvoices('1000.724b31ffc4bea14f5d891bae6d51dc8e.0e509496b62427dca7fa68bf5c7f2aab');
+getLeads();
+//getInvoices();
+//searchInvoices();

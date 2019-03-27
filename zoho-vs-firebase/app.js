@@ -21,11 +21,9 @@ let initialDataLoaded = false;
  */
 function registerChildAdd() {
   ref.on('child_added', snapshot => {
-    if(initialDataLoaded) {
-      console.log('initialDataLoaded child_added');        
+    if(initialDataLoaded) {      
       return;
     }
-    console.log('child_added');  
     console.log(snapshot.val());    
   });
 }
@@ -34,8 +32,7 @@ function registerChildAdd() {
  */
 function startListeners() {
   ref.on('child_changed', snapshot => {
-    console.log('child_changed');
-    //console.log(snapshot.val());
+    console.log(snapshot.val());
   });
 
   // Register event types which will ignor the existing data before

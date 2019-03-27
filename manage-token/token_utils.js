@@ -43,9 +43,9 @@ async function getToken() {
   }
   else { // Token is expired, get a refresh token and store it into redis
     const res = await getRefreshToken();
-    await setAsync(process.env.REFRESH_TOKEN, 3600, res.data.access_token);
-    
-    console.log(`New Token: ${res.data}`);
+    await setAsync(process.env.REFRESH_TOKEN, res.data.expires_in_sec, res.data.access_token);
+    // console.log(`New Token:`);
+    // console.log(res.data);
     client.quit();
     return res.data.access_token;
   }  

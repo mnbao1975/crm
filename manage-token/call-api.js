@@ -25,7 +25,25 @@ async function getRecords(url, headers, params={}) {
   }  
 }
 /**
- * Example for getting invoices
+ * Example for getting deals
+ * @param {string} oauthtoken 
+ */
+async function getDeals(dealId='') {  
+  try {
+    const oauthtoken = await tokenUtils.getToken();
+    const url = `${process.env.API_URL}/deals/${dealId}`;
+    const headers = {'Authorization': `Zoho-oauthtoken ${oauthtoken}`};
+    
+    const res = await getRecords(url, headers);
+    if(res) {
+      console.log(res.data);
+    }  
+  } catch (error) {
+    console.log(error);
+  }
+};
+/**
+ * Example for getting leads
  * @param {string} oauthtoken 
  */
 async function getLeads() {  
@@ -54,7 +72,7 @@ async function getInvoices() {
     
     const res = await getRecords(url, headers);
     if(res) {
-      console.log(res.data);
+      console.log(res.data.data[0]);
     }  
   } catch (error) {
     console.log(error);
@@ -64,7 +82,7 @@ async function getInvoices() {
  * Example for searching invoices with criteria in the params
  * @param {string} oauthtoken 
  */
-async function searchInvoices() {
+async function searchInvoices(invoiceNumber) {
   try {
     const oauthtoken = await tokenUtils.getToken();
     const url = `${process.env.API_URL}/invoices/search`;
@@ -79,6 +97,8 @@ async function searchInvoices() {
   }
 };
 
-getLeads();
-//getInvoices();
-//searchInvoices();
+
+//getLeads();
+//getDeals('3894800000000217040');
+getInvoices();
+//searchInvoices('3894800000000217371');

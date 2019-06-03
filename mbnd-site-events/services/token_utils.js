@@ -5,15 +5,12 @@
 const { promisify } = require('util');
 const redis = require("redis");
 const axios = require('axios');
-const config = require('dotenv').config();
 
-if (config.error) {
-  throw config.error;
-}
 // Connect Redis
 const client = redis.createClient({ host: process.env.REDIS_HOST, port: process.env.REDIS_PORT });
-client.on("error", function (err) {
-    console.log("Error " + err);
+client.on("error", err => {
+  console.log("Redis: " + err);
+  throw err;    
 });
 /**
  * 

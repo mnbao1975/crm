@@ -55,7 +55,7 @@ async function getLeads() {
     
     const res = await getRecords(url, headers);
     if(res) {
-      console.log(res.data.data);
+      console.log(res.data.data[0]);
     }  
   } catch (error) {
     console.log(error);

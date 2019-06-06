@@ -8,7 +8,6 @@ function basicAuth(req, res, next) {
   const base64Credentials =  req.headers.authorization.split(' ')[1];
   const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
   const [username, password] = credentials.split(':');
-  console.log(username, password);
   if(username !== 'test' || password !== 'test') {
     return res.status(401).json({ message: 'Invalid Authentication Credentials' });
   }

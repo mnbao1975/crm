@@ -5,12 +5,15 @@
 const { promisify } = require('util');
 const redis = require("redis");
 const axios = require('axios');
+const config = require('dotenv').config();
 
+if (config.error) {
+  throw config.error;
+}
 // Connect Redis
 const client = redis.createClient({ host: process.env.REDIS_HOST, port: process.env.REDIS_PORT });
-client.on("error", err => {
-  console.log("Redis: " + err);
-  throw err;    
+client.on("error", function (err) {
+    console.log("Error " + err);
 });
 /**
  * 
@@ -29,8 +32,7 @@ async function getRefreshToken() {
       data: {}
     });
   } catch (error) {
-    console.log(error);
-    throw new Error('Cannot get refresh token');
+    throw error;
   }  
 };
 
@@ -40,14 +42,15 @@ async function getToken() {
 
   const token = await getAsync(process.env.REFRESH_TOKEN);
   if (token) {
-    //client.quit();
+    client.quit();
     return token;
   }
   else { // Token is expired, get a refresh token and store it into redis
     const res = await getRefreshToken();
-    
     await setAsync(process.env.REFRESH_TOKEN, res.data.expires_in_sec, res.data.access_token);
-    //client.quit();
+    // console.log(`New Token:`);
+    // console.log(res.data);
+    client.quit();
     return res.data.access_token;
   }  
 };

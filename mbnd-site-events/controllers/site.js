@@ -1,16 +1,23 @@
+/**
+ * Based on the event, this controller will use a specific service to process that event
+ * 
+ */
 let site = require('../services/site');
 
-function processLeads(req, res, next) {
+async function processLeads(req, res, next) {
   switch (req.body.event) {
     case 'SiteLeadCreated':
-      site.createLead(req.body.payload.leads);
-      res.json({ it: 'works', token_key: process.env.SERVICE_TOKEN_KEY });
+      try {
+        const lead = await site.createLead(req.body.payload.leads);
+        res.json(lead);                
+      } catch (error) {
+        console.log(error);
+        res.status(501).json({ message: error.message });
+      }
       break;
     default:
       res.json({ say: 'nothing todo'} );
-      console.log('nothing to do');
   }
-
 }
 
 module.exports = {

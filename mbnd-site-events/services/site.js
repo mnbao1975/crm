@@ -55,7 +55,7 @@ async function createLead(leads) {
 }
 /**
  * This function will take a keypath embeded inside the note content and replace it with appropriate info of user.
- * Ex: The pattern could be a string of '{user.name}'
+ * Ex: The keypath could be a string of '{user.name}'
  * @param {obj} leadEvent - the lead data sent to the app as event
  * @param {string} noteContent 
  */

@@ -1,3 +1,5 @@
+docker run --rm --name my-redis -p 6379:6379 -d redis
+
 This app is similar to the 'manage-token'app, but it uses the token which allows you to access all modules and setting 
 Scope: ZohoCRM.modules.ALL,ZohoCRM.settings.ALL
 

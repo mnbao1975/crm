@@ -1,3 +1,5 @@
+let site = require('../services/site');
+
 function basicAuth(req, res, next) {
   // check for basic auth header
   if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
@@ -15,6 +17,17 @@ function basicAuth(req, res, next) {
   next();
 }
 
+async function oauthtoken(req, res, next) {
+  try {
+    let auth = await site.getOauthtoken();  
+    return res.json({ oauthtoken: auth });
+  } catch (error) {
+    return res.status(401).json({ message: error.message });
+  }
+  
+}
+
 module.exports = {
   basicAuth,
+  oauthtoken,
 }

@@ -37,7 +37,8 @@ async function createLead(leads) {
         Company: leadEvent.user.name,
         Last_Name: leadEvent.user.name,
         Email: leadEvent.user.email,      
-        Phone: '09098448241'
+        Phone: '09098448241',
+        MBND_reference: leadEvent.reference // customized filed
       }]
     };
     const oauthtoken = await tokenUtils.getToken();    
@@ -103,7 +104,19 @@ async function createNote(leadID, leadEvent) {
     throw new Error(`Cannot create a note for lead ${leadID}`);
   }
 }
+/**
+ * Just get Zoho oauthotoken for testing on postman
+ */
+async function getOauthtoken() {
+  try {
+    return await tokenUtils.getToken();
+  } catch (error) {
+    throw new Error(`Cannot get Zoho Oauthtoken`);
+  }
+  
+}
 
 module.exports = {
   createLead,
+  getOauthtoken,
 }

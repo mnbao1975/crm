@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { basicAuth } = require('./controllers/auth');
+const { basicAuth, oauthtoken } = require('./controllers/auth');
 const eventsRouter = require('./routes/events');
 
 let app = express();
@@ -33,6 +33,7 @@ app.post('/health', (req, res, next) => {
 });
 
 app.all('*', basicAuth);
+app.get('/oauthtoken', oauthtoken);
 
 app.use('/events', eventsRouter);
 
